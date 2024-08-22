@@ -37,4 +37,5 @@ async def get_photo(message: Message):
 
 @router.callback_query(F.data == 'catalog')
 async def catalog(callback: CallbackQuery):
+    await callback.answer('Вы выбрали каталог')
     await callback.message.answer('Привет!')

@@ -6,13 +6,13 @@ from aiogram.fsm.context import FSMContext
 
 import app.keyboard as kb
 
-
 router = Router()
 class Register(StatesGroup):
 	name = State()
 	age = State()
 	number = State()
 
+id_files = {}
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
@@ -27,25 +27,50 @@ async def catalog(message: Message):
 @router.callback_query(F.data == 'tshirt')
 async def tshirt(callback: CallbackQuery):
 	await callback.answer()
-	await callback.message.answer_photo(photo = FSInputFile('bot/media/tshirt.jpg'),
-	                                    caption = 'Вы выбрали категорию футболок', reply_markup=kb.main_keyboard)
+	try:
+		await callback.message.answer_photo(photo=id_files['tshirt'],
+		                                    caption='Вы выбрали категорию футболок',
+		                                    reply_markup=kb.main_keyboard)
+	except KeyError:
+		message_id = await callback.message.answer_photo(photo=FSInputFile('bot/media/tshirt.jpg'),
+		                                                 caption='Вы выбрали категорию футболок',
+		                                                 reply_markup=kb.main_keyboard)
+
+		id_files['tshirt'] = message_id.photo[-1].file_id
 	await callback.message.delete()
 
 
 @router.callback_query(F.data == 'sneakers')
 async def tshirt(callback: CallbackQuery):
 	await callback.answer()
-	await callback.message.answer_photo(photo = FSInputFile('bot/media/sneakers.png'),
-	                                    caption = 'Вы выбрали категорию кроссовок', reply_markup=kb.main_keyboard)
+	try:
+		await callback.message.answer_photo(photo=id_files['sneakers'],
+		                                    caption='Вы выбрали категорию кроссовок',
+		                                    reply_markup=kb.main_keyboard)
+	except KeyError:
+		message_id = await callback.message.answer_photo(photo=FSInputFile('bot/media/sneakers.png'),
+		                                                 caption='Вы выбрали категорию кроссовок',
+		                                                 reply_markup=kb.main_keyboard)
+
+		id_files['sneakers'] = message_id.photo[-1].file_id
 	await callback.message.delete()
 
 
 @router.callback_query(F.data == 'cap')
 async def tshirt(callback: CallbackQuery):
 	await callback.answer()
-	await callback.message.answer_photo(photo = FSInputFile('bot/media/cap.png'),
-	                                    caption = 'Вы выбрали категорию кепок', reply_markup=kb.main_keyboard)
+	try:
+		await callback.message.answer_photo(photo=id_files['cap'],
+		                                    caption='Вы выбрали категорию кепок',
+		                                    reply_markup=kb.main_keyboard)
+	except KeyError:
+		message_id = await callback.message.answer_photo(photo=FSInputFile('bot/media/cap.png'),
+		                                                 caption='Вы выбрали категорию кепок',
+		                                                 reply_markup=kb.main_keyboard)
+
+		id_files['cap'] = message_id.photo[-1].file_id
 	await callback.message.delete()
+
 
 @router.message(F.text == 'Регистрация')
 async def register (message: Message, state: FSMContext):

@@ -27,3 +27,6 @@ async def items(category_id):
 		keyboard.add(InlineKeyboardButton(text=item.name, callback_data= f'item_{item.id}'))
 	keyboard.add(InlineKeyboardButton(text='На главную', callback_data='to_main'))
 	return keyboard.adjust(2).as_markup()
+
+
+

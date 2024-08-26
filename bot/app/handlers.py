@@ -43,3 +43,6 @@ async def tshirt(callback: CallbackQuery):
 		id_files['cap'] = message_id.photo[-1].file_id
 	await callback.message.delete()
 """
+
+
+

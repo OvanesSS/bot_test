@@ -12,21 +12,23 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 
 class User(Base):
-	__tabletname__ = 'users'
+	__tablename__ = 'users'
 
 	id: Mapped[int] = mapped_column(primary_key=True)
-	td_id: mapped_column(BigInteger)
+	tg_id =  mapped_column(BigInteger)
 
 
 class Category(Base):
-	__tabletname__='categories'
+	__tablename__='categories'
+
 
 	id: Mapped[int] = mapped_column(primary_key=True)
 	name: Mapped[str] = mapped_column(String(25))
 
 
 class Item(Base):
-	__tabletname__ = 'items'
+	__tablename__ = 'items'
+
 
 	id: Mapped[int] = mapped_column(primary_key=True)
 	name: Mapped[str] = mapped_column(String(25))
@@ -38,3 +40,4 @@ class Item(Base):
 async def async_main():
 	async with engine.begin() as conn:
 		await conn.run_sync(Base.metadata.create_all)
+

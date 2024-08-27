@@ -4,8 +4,8 @@ from aiogram.types import Message, CallbackQuery, FSInputFile
 from aiogram.fsm.state import State, StatesGroup, default_state
 from aiogram.fsm.context import FSMContext
 
-import bot.app.keyboard as kb
-import bot.app.database.requests as rq
+import app.keyboard as kb
+import app.database.requests as rq
 
 router = Router()
 
@@ -25,7 +25,14 @@ async def catalog(message: Message):
 async def category(callback: CallbackQuery):
 	await callback.answer('Вы выбрали категорию')
 	await callback.message.answer('Выберите товар',
-	                              reply_markup=await kb.get_category_items(callback.data.split('_')[1]))
+	                              reply_markup=await kb.items(callback.data.split('_')[1]))
+
+@router.callback_query(F.data.startswith('item_'))
+async def category(callback: CallbackQuery):
+	item_data = await rq.get_item(callback.data.split('_')[1])
+	await callback.answer('Вы выбрали товар')
+	await callback.message.answer(f'Название: {item_data.name}\nОписание: {item_data.description}\nЦена: {item_data.price}$')
+
 
 
 """@router.callback_query(F.data == 'cap')

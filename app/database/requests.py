@@ -1,5 +1,5 @@
-from bot.app.database.models import async_session
-from bot.app.database.models import User, Category, Item
+from app.database.models import async_session
+from app.database.models import User, Category, Item
 from sqlalchemy import select, update, delete
 
 
@@ -20,5 +20,8 @@ async def get_category_items(category_id):
 	async with async_session() as session:
 		return await session.scalars(select(Item).where(Item.category == category_id))
 
+async def get_item(item_id):
+	async with async_session() as session:
+		return await session.scalar(select(Item).where(Item.id == item_id))
 
 

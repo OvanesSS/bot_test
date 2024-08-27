@@ -1,7 +1,7 @@
 from aiogram.types import (ReplyKeyboardMarkup,KeyboardButton,
                            InlineKeyboardMarkup, InlineKeyboardButton)
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from bot.app.database.requests import get_categories, get_category_items
+from app.database.requests import get_categories, get_category_items
 
 main_keyboard = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Каталог')],
                                                [KeyboardButton(text='Корзина')],

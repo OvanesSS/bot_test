@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 engine = create_async_engine(url=os.getenv('ALCHEMYSQL_URL'))
-
 async_session = async_sessionmaker(engine)
 
 
@@ -25,7 +24,6 @@ class User(Base):
 class Category(Base):
 	__tablename__='categories'
 
-
 	id: Mapped[int] = mapped_column(primary_key=True)
 	name: Mapped[str] = mapped_column(String(25))
 
@@ -33,18 +31,15 @@ class Category(Base):
 class Item(Base):
 	__tablename__ = 'items'
 
-
 	id: Mapped[int] = mapped_column(primary_key=True)
 	name: Mapped[str] = mapped_column(String(25))
 	description: Mapped[str] = mapped_column(String(120))
 	price: Mapped[int] = mapped_column()
+	#id_photo: Mapped[str] = mapped_column(String(200))
 	category: Mapped[int] = mapped_column(ForeignKey('categories.id'))
 
 
 async def async_main():
 	async with engine.begin() as conn:
 		await conn.run_sync(Base.metadata.create_all)
-
-
-
 

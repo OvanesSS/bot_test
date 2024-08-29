@@ -5,7 +5,7 @@ from sqlalchemy import select, update, delete
 
 async def set_user(tg_id):
 	async with async_session() as session:
-		user = await session.scalar(select(User).where(User.tg_id == tg_id))
+		user = await session.scalar(select(User).where(User.tg_id == int(tg_id)))
 		if not user:
 			session.add(User(tg_id=tg_id))
 			await session.commit()
@@ -18,10 +18,10 @@ async def get_categories():
 
 async def get_category_items(category_id):
 	async with async_session() as session:
-		return await session.scalars(select(Item).where(Item.category == category_id))
+		return await session.scalars(select(Item).where(Item.category == int(category_id)))
 
 async def get_item(item_id):
 	async with async_session() as session:
-		return await session.scalar(select(Item).where(Item.id == item_id))
+		return await session.scalar(select(Item).where(Item.id == int(item_id)))
 
 

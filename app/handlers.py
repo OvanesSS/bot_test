@@ -31,8 +31,14 @@ async def category(callback: CallbackQuery):
 async def category(callback: CallbackQuery):
 	item_data = await rq.get_item(callback.data.split('_')[1])
 	await callback.answer('Вы выбрали товар')
-	await callback.message.answer(f'Название: {item_data.name}\nОписание: {item_data.description}\nЦена: {item_data.price}$')
+	await callback.message.answer(f'Название: {item_data.name}\nОписание: {item_data.description}\nЦена: {item_data.price} руб.')
 
+
+@router.callback_query(F.data=='to_main')
+async def to_main(callback: CallbackQuery):
+	await callback.answer('Вы вернулись в главное меню')
+	await callback.message.answer("Добро пожаловать в магазин кроссовок!", reply_markup=kb.main_keyboard)
+	await callback.message.delete()
 
 
 """@router.callback_query(F.data == 'cap')
